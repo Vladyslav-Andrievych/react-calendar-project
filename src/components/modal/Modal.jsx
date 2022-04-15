@@ -1,50 +1,90 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 
 import './modal.scss';
 
-class Modal extends Component {
-  render() {
-    return (
-      <div className="modal overlay">
-        <div className="modal__content">
-          <div className="create-event">
-            <button className="create-event__close-btn">+</button>
-            <form className="event-form">
+const Modal = ({ onModalClose, onEventCreate }) => {
+  const [formInputs, setFormInputs] = useState({
+    title: '',
+    date: '',
+    startTime: '',
+    endTime: '',
+    description: '',
+  });
+
+  function onInputChange(event) {
+    const { name, value } = event.target;
+
+    setFormInputs((prevValues) => ({
+      ...prevValues,
+      [name]: value,
+    }));
+  }
+
+  return (
+    <div className="modal overlay">
+      <div className="modal__content">
+        <div className="create-event">
+          <button className="create-event__close-btn" onClick={onModalClose}>
+            +
+          </button>
+          <form
+            className="event-form"
+            onSubmit={(event) => {
+              event.preventDefault();
+              onEventCreate(formInputs);
+            }}
+          >
+            <input
+              type="text"
+              name="title"
+              placeholder="Title"
+              className="event-form__field"
+              value={formInputs.title}
+              onChange={onInputChange}
+              required
+            />
+            <div className="event-form__time">
               <input
-                type="text"
-                name="title"
-                placeholder="Title"
+                type="date"
+                name="date"
                 className="event-form__field"
+                value={formInputs.date}
+                onChange={onInputChange}
+                required
               />
-              <div className="event-form__time">
-                <input type="date" name="date" className="event-form__field" />
-                <input
-                  type="time"
-                  name="startTime"
-                  className="event-form__field"
-                  onChange={this.handleChange}
-                />
-                <span>-</span>
-                <input
-                  type="time"
-                  name="endTime"
-                  className="event-form__field"
-                />
-              </div>
-              <textarea
-                name="description"
-                placeholder="Description"
+              <input
+                type="time"
+                name="startTime"
                 className="event-form__field"
-              ></textarea>
-              <button type="submit" className="event-form__submit-btn">
-                Create
-              </button>
-            </form>
-          </div>
+                value={formInputs.startTime}
+                onChange={onInputChange}
+                required
+              />
+              <span>-</span>
+              <input
+                type="time"
+                name="endTime"
+                className="event-form__field"
+                value={formInputs.endTime}
+                onChange={onInputChange}
+                required
+              />
+            </div>
+            <textarea
+              name="description"
+              placeholder="Description"
+              className="event-form__field"
+              value={formInputs.description}
+              onChange={onInputChange}
+            />
+            <button type="submit" className="event-form__submit-btn">
+              Create
+            </button>
+          </form>
         </div>
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
 
 export default Modal;

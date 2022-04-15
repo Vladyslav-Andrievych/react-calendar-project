@@ -1,0 +1,23 @@
+.popup {
+  position: absolute;
+  width: 102px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 4px;
+
+  &__close-btn {
+    width: 30px;
+    height: 30px;
+    font-size: 24px;
+    transform: rotate(45deg);
+    outline: none;
+    border: none;
+    border-radius: 50%;
+    background-color: transparent;
+    padding: 0;
+    cursor: pointer;
+  }
+}
