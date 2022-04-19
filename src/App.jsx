@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Header from './components/header/Header.jsx';
 import Calendar from './components/calendar/Calendar.jsx';
 import Modal from './components/modal/Modal.jsx';
@@ -7,33 +7,20 @@ import {
   getWeekStartDate,
   generateWeekRange,
   getDateTime,
+  changeWeekDate,
 } from '../src/utils/dateUtils.js';
-
-import eventsList from './gateway/events.js';
-
-import moment from 'moment';
+import { eventValidation } from './utils/eventUtils.js';
+import { createEvent, fetchEvents, deleteEvent } from './gateway/gateway.js';
 
 import './common.scss';
 
 const App = () => {
-  const [events, setEvents] = useState(eventsList);
+  const [events, updateEvents] = useEventsState();
   const [todayDate, setTodayDate] = useState(new Date());
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const weekDates = generateWeekRange(getWeekStartDate(todayDate));
-
   function onNavigationBtnClick(motion) {
-    let copyDate = moment(new Date(todayDate));
-
-    if (motion === 'left') {
-      copyDate.subtract(7, 'days');
-    } else if (motion === 'right') {
-      copyDate.add(7, 'days');
-    } else {
-      copyDate = new Date();
-    }
-
-    setTodayDate(() => new Date(copyDate));
+    setTodayDate(() => changeWeekDate(todayDate, motion));
   }
 
   function onModalVisibleChange() {
@@ -46,25 +33,34 @@ const App = () => {
     const dateFrom = getDateTime(date, startTime);
     const dateTo = getDateTime(date, endTime);
 
-    setEvents((prevEvents) => [
-      ...prevEvents,
-      {
-        id: Math.random(),
-        title,
-        dateFrom,
-        dateTo,
-        description,
-      },
-    ]);
+    const newEvent = {
+      title,
+      dateFrom,
+      dateTo,
+      description,
+    };
 
-    setIsModalOpen(false);
+    const isEventValid = eventValidation(newEvent, events);
+
+    if (isEventValid) {
+      createEvent(newEvent)
+        .then(() => {
+          updateEvents();
+          setIsModalOpen((isModalOpen) => !isModalOpen);
+        })
+        .catch((error) => alert(error.message));
+    } else {
+      alert('Error! Event at this time already exist!');
+    }
   }
 
   function onEventDelete(eventId) {
-    const filteredEventsList = events.filter(({ id }) => id !== eventId);
-
-    setEvents(() => filteredEventsList);
+    deleteEvent(eventId)
+      .then(() => updateEvents())
+      .catch((error) => alert(error.message));
   }
+
+  const weekDates = generateWeekRange(getWeekStartDate(todayDate));
 
   return (
     <>
@@ -89,3 +85,19 @@ const App = () => {
 };
 
 export default App;
+
+function useEventsState() {
+  const [events, setEvents] = useState([]);
+
+  function getEvents() {
+    fetchEvents()
+      .then((eventsList) => setEvents(() => eventsList))
+      .catch((error) => alert(error.message));
+  }
+
+  useEffect(() => {
+    getEvents();
+  }, []);
+
+  return [events, getEvents];
+}

@@ -68,3 +68,37 @@ export const getDisplayedMonth = (date) => {
     ? `${months[monthStart]} - ${months[monthEnd]} ${yearStart}`
     : `${months[monthStart]} ${yearStart} - ${months[monthEnd]} ${yearEnd}`;
 };
+
+export const defineToday = (dayDate) => {
+  const today = new Date();
+
+  if (
+    today.getDate() === dayDate.getDate() &&
+    today.getMonth() === dayDate.getMonth() &&
+    today.getFullYear() === dayDate.getFullYear()
+  ) {
+    return true;
+  }
+
+  return false;
+};
+
+export const getMinutesFromDayStart = () => {
+  const time = new Date();
+
+  return time.getHours() * 60 + time.getMinutes();
+};
+
+export const changeWeekDate = (currentWeekDate, motion) => {
+  let copyDate = moment(new Date(currentWeekDate));
+
+  if (motion === 'left') {
+    copyDate.subtract(7, 'days');
+  } else if (motion === 'right') {
+    copyDate.add(7, 'days');
+  } else {
+    copyDate = new Date();
+  }
+
+  return new Date(copyDate);
+};

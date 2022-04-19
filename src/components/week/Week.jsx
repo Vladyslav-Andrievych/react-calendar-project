@@ -1,5 +1,6 @@
 import React from 'react';
-import Day from '../day/Day';
+import PropTypes from 'prop-types';
+import Day from '../day/Day.jsx';
 
 import './week.scss';
 
@@ -19,7 +20,7 @@ const Week = ({ weekDates, events, onEventDelete }) => {
         return (
           <Day
             key={dayStart.getDate()}
-            dataDay={dayStart.getDate()}
+            dataDay={dayStart}
             dayEvents={dayEvents}
             onEventDelete={onEventDelete}
           />
@@ -27,6 +28,12 @@ const Week = ({ weekDates, events, onEventDelete }) => {
       })}
     </div>
   );
+};
+
+Week.propTypes = {
+  weekDates: PropTypes.array.isRequired,
+  events: PropTypes.array.isRequired,
+  onEventDelete: PropTypes.func.isRequired,
 };
 
 export default Week;

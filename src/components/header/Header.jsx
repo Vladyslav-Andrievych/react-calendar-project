@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import { getDisplayedMonth } from '../../utils/dateUtils.js';
 
@@ -35,6 +36,12 @@ const Header = ({ onNavigationBtnClick, onModalOpen, todayDate }) => {
       </div>
     </header>
   );
+};
+
+Header.propTypes = {
+  onNavigationBtnClick: PropTypes.func.isRequired,
+  onModalOpen: PropTypes.func.isRequired,
+  todayDate: PropTypes.object.isRequired,
 };
 
 export default Header;

@@ -1,0 +1,25 @@
+.time-line {
+  position: absolute;
+  top: -5px;
+  left: -5px;
+  width: calc(100% + 5px);
+  display: flex;
+  align-items: center;
+  z-index: 5;
+
+  &__circle {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: #f00;
+  }
+
+  &__line {
+    height: 1px;
+    flex: 1;
+    border: none;
+    background-color: #f00;
+    margin: 0;
+  }
+}

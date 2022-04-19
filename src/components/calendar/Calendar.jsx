@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
+import Navigation from './../navigation/Navigation.jsx';
+import Week from '../week/Week.jsx';
+import Sidebar from '../sidebar/Sidebar.jsx';
 
-import Navigation from './../navigation/Navigation';
-import Week from '../week/Week';
-import Sidebar from '../sidebar/Sidebar';
+import PropTypes from 'prop-types';
 
 import './calendar.scss';
 
@@ -22,6 +23,12 @@ const Calendar = ({ weekDates, events, onEventDelete }) => {
       </div>
     </section>
   );
+};
+
+Calendar.propTypes = {
+  weekDates: PropTypes.array.isRequired,
+  events: PropTypes.array.isRequired,
+  onEventDelete: PropTypes.func.isRequired,
 };
 
 export default Calendar;
