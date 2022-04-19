@@ -71,10 +71,6 @@ function useEventListenerOnEventClick(eventRef) {
 
     //memory leak?? when i tries to call removeEventListener i gets error "cannot read
     //properties of null (reading 'removeEventListener')", so no memory leak??
-
-    // return () => {
-    //   eventRef.current.removeEventListener('click', onEventClick);
-    // };
   }, []);
 
   return popupLocation;

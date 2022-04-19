@@ -1,11 +1,13 @@
+@import '../../variables.scss';
+
 .popup {
   position: absolute;
   width: 102px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #fff;
-  border-radius: 8px;
+  background-color: $background-color;
+  border-radius: $border-radius;
   padding: 4px;
 
   &__close-btn {

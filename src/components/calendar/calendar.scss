@@ -1,3 +1,5 @@
+@import '../../variables.scss';
+
 .calendar {
   display: flex;
   flex-direction: column;
@@ -33,13 +35,13 @@
   &__day {
     position: relative;
     flex: 1;
-    border-left: 1px solid #eee;
+    border-left: 1px solid $border-slot-color;
   }
 
   &__time-slot {
     height: 60px;
     position: relative;
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px solid $border-slot-color;
   }
 
   &__day-label {
@@ -60,7 +62,7 @@
     opacity: 1;
 
     .day-label__day-name {
-      color: #6262ff;
+      color: $text-blue-color;
       margin-top: 6px;
     }
 
@@ -70,8 +72,8 @@
       text-align: center;
       line-height: 40px;
       border-radius: 50%;
-      background-color: #6262ff;
-      color: #fff;
+      background-color: $background-blue-color;
+      color: $text-white-color;
     }
   }
 
@@ -83,11 +85,4 @@
   &__day-number {
     font-size: 22px;
   }
-}
-
-.red-line {
-  position: absolute;
-  width: 100%;
-  border-top: 2px solid red;
-  z-index: 5;
 }
