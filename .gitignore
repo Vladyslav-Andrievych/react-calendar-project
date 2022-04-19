@@ -2,4 +2,4 @@
 package-lock.json
 
 # exclude /dist to have possibility to update code on Netlify
-# /dist
+/dist
